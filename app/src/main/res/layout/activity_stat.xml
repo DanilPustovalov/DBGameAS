@@ -8,7 +8,9 @@
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:id="@+id/sum"
+    android:id="@+id/gameCounted"
+    android:layout_marginLeft="24dp"
+    android:textSize="36dp"
     />
 
 </RelativeLayout>

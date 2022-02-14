@@ -40,10 +40,20 @@ public class DBManager {
 	// INSERT INTO RESULTS VALUES('Player One', 150);
 
 
-
+	 int gamesCount(){
+		ArrayList<Result> results = dbManager.getAllResults();
+		int length=results.size();
+		return length+1;
+	}
+	int maxScore(){
+		Cursor cursor = db.rawQuery("SELECT MAX(score) as max FROM RESULTS;", null);
+		int maxSc=Integer.parseInt(cursor.getString(cursor
+				.getColumnIndex("SCORE")));
+		return maxSc;
+	}
 	ArrayList<Result> getAllResults() {
 		ArrayList<Result> data = new ArrayList<Result>();
-		Cursor cursor = db.rawQuery("SELECT * FROM RESULTS;", null);
+		Cursor cursor = db.rawQuery("SELECT * FROM RESULTS ORDER BY SCORE DESC;", null);
 		boolean hasMoreData = cursor.moveToFirst();
 
 		while (hasMoreData) {
@@ -53,12 +63,9 @@ public class DBManager {
 			data.add(new Result(name, score));
 			hasMoreData = cursor.moveToNext();
 		}
-
 		return data;
 	}
-
 	private void createTablesIfNeedBe() {
 		db.execSQL("CREATE TABLE IF NOT EXISTS RESULTS (USERNAME TEXT, SCORE INTEGER);");
 	}
-
 }
